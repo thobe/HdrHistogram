@@ -7,9 +7,8 @@
  * @version 1.1.2
  */
 
-package perf.org.HdrHistogram;
+package org.HdrHistogram;
 
-import org.HdrHistogram.*;
 import org.junit.*;
 
 /**

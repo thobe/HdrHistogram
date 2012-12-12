@@ -7,9 +7,8 @@
  * @version 1.1.2
  */
 
-package test.org.HdrHistogram;
+package org.HdrHistogram;
 
-import org.HdrHistogram.*;
 import org.junit.*;
 
 /**
@@ -100,10 +99,20 @@ public class HistogramTest {
         Assert.assertEquals(1L, histogram.getHistogramData().getTotalCount());
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test
     public void testRecordValue_Overflow_ShouldThrowException() throws Exception {
         Histogram histogram = new Histogram(highestTrackableValue, numberOfSignificantValueDigits);
-        histogram.recordValue(highestTrackableValue * 3);
+        try {
+            try {
+                histogram.recordValue(highestTrackableValue * 3);
+            } catch (AssertionError e) {
+                // would be thrown if assertions are enabled
+                return;
+            }
+            Assert.fail("Expected either AssertionError or ArrayIndexOutOfBoundsException");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // this is expected
+        }
     }
 
     @org.junit.Test
